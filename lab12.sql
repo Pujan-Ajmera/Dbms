@@ -63,5 +63,20 @@ select avg(salary) from person join dept on person.DepartmentID = dept.Departmen
 --single column)
 	select person.Personname + 'lives in ' + person.city from person
 	
+--Part – B
+--1. Produce Output Like: <PersonName> earns <Salary> from <DepartmentName> department monthly. (In single column)
+select concat(person.personname,'earns',person.salary,dept.departmentname,'monthly') from person join dept on person.departmentid = dept.departmentid
+--2. Find city & department wise total, average & maximum salaries.
+select sum(salary),avg(salary),max(salary) from person join dept on person.DepartmentID = dept.DepartmentID group by city, department 
+--3. Find all persons who do not belong to any department.
+select person.name from person where person.departmentid is null;
+--4. Find all departments whose total salary is exceeding 100000.
+select sum(salary),dept.departmentname from person,dept group by dept.departmentname having sum(salary)>=10000	
 
-	
+--part c
+--1 
+select dept.departmentname from person join dept on person.departmentid = dept.departmentid group by dept.departmenid having count(person.personid)=0;
+--2
+select dept.departmentname from person join dept on person.departmentid = dept.departmentid group by dept.departmenid having count(person.personid)>=2
+--3
+update table person set salary=salary+(salary/10) from person join dept where dept.departmentname='computer'
