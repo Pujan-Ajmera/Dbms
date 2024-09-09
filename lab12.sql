@@ -43,8 +43,25 @@ INSERT INTO Person (PersonID, PersonName, DepartmentID, Salary, JoiningDate, Cit
 	select person.Personname ,dept.Departmentname, person.salary from person join dept on person.DepartmentID = dept.DepartmentID where person.City = 'jamnagar'
 --4. Retrieve person name, salary & department name who does not belong to Rajkot city.
 	select person.Personname ,person.Salary ,dept.Departmentname from person join dept on person.DepartmentID = dept.DepartmentID where not person.city = 'rajkot'
---5. Retrieve person’s name of the person who joined the Civil department after 1-Aug-2001.
+--5. Retrieve personâ€™s name of the person who joined the Civil department after 1-Aug-2001.
 	select person.Personname from person join dept on person.DepartmentID = dept.DepartmentID where Person.JoiningDate>'1-Aug-2001' and dept.Departmentname = 'civil'
 --6. Find details of all persons who belong to the computer department.
 select * from person join dept on person.DepartmentID = dept.DepartmentID where dept.Departmentname = 'computer'
+
+--7. Display all the person's name with the department whose joining date difference with the current date
+--is more than 365 days.
+	select * from person join dept on person.DepartmentID = dept.DepartmentID where DATEDIFF(day,person.joiningdate,getdate())>365
+--8. Find department wise person counts.
+	select count(person.personid) from person join dept on person.DepartmentID = dept.DepartmentID group by dept.DepartmentName
+--9. Give department wise maximum & minimum salary with department name.
+	select max(salary), min(salary), dept.Departmentname from person join dept on person.DepartmentID = dept.DepartmentID group by dept.DepartmentName
+--10. Find city wise total, average, maximum and minimum salary.
+	select max(salary), min(salary),sum(salary) ,person.city from person join dept on person.DepartmentID = dept.DepartmentID group by person.city
+--11. Find the average salary of a person who belongs to Ahmedabad city.
+select avg(salary) from person join dept on person.DepartmentID = dept.DepartmentID where person.City = 'ahmedabad'
+--12. Produce Output Like: <PersonName> lives in <City> and works in <DepartmentName> Department. (In
+--single column)
+	select person.Personname + 'lives in ' + person.city from person
+	
+
 	
